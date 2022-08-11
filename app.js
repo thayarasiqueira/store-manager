@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('express-async-errors');
 const productsRouter = require('./router/productsRouter');
+const salesRouter = require('./router/salesRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/', productsRouter);
+app.use('/', salesRouter);
 
 app.use((err, _req, res, _next) => {
   const { message, status } = err;
