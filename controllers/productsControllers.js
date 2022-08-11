@@ -1,6 +1,7 @@
 const productsServices = require('../services/productsServices');
 
 const productsControllers = {
+
   getAll: async (_req, res) => {
     const products = await productsServices.getAll();
     res.status(200).json(products);
@@ -10,9 +11,21 @@ const productsControllers = {
     const { id } = req.params;
     const product = await productsServices.findById(id);
     if (!product) {
-      throw new Error('Product not found');
+      res.status(404).json({ message: 'Product not found' });
     }
     res.status(200).json(product);
+  },
+
+  create: async (req, res) => {
+    const { name } = req.body;
+    if (!name) {
+      res.status(400).json({ message: '"name" is required' });
+    }
+    if (name.length < 5) {
+      res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+    }
+    const newProduct = await productsServices.create(name);
+    res.status(201).json(newProduct);
   },
 };
 
