@@ -34,6 +34,11 @@ const productsModels = {
     const [[result]] = await db.query(sql2, [id]);
     return result;
   },
+
+  delete: async (id) => {
+    const sql = 'DELETE FROM products WHERE id = ?';
+    await db.query(sql, [id]);
+  },
 };
 
 module.exports = productsModels;

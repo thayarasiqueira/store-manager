@@ -45,6 +45,16 @@ const productsControllers = {
     const editedProduct = await productsServices.update(name, id);
     res.status(200).json(editedProduct);
   },
+
+  delete: async (req, res) => {
+    const { id } = req.params;
+    const product = await productsServices.checkIfExists(id);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+    }
+    await productsServices.delete(id);
+    res.status(204).end();
+  },
 };
 
 module.exports = productsControllers;
