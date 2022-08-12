@@ -9,10 +9,8 @@ const productsControllers = {
 
   findById: async (req, res) => {
     const { id } = req.params;
+    await productsServices.checkIfExists(id);
     const product = await productsServices.findById(id);
-    if (!product) {
-      res.status(404).json({ message: 'Product not found' });
-    }
     res.status(200).json(product);
   },
 
@@ -32,26 +30,15 @@ const productsControllers = {
     const { id } = req.params;
     const { name } = req.body;
 
-    const product = await productsServices.checkIfExists(id);
-    if (!product) {
-      res.status(404).json({ message: 'Product not found' });
-    }
-    if (!name) {
-      res.status(400).json({ message: '"name" is required' });
-    }
-    if (name.length < 5) {
-      res.status(422).json({ message: '"name" length must be at least 5 characters long' });
-    }
+    await productsServices.checkIfExists(id);
+    await productsServices.validateName(name);
     const editedProduct = await productsServices.update(name, id);
     res.status(200).json(editedProduct);
   },
 
   delete: async (req, res) => {
     const { id } = req.params;
-    const product = await productsServices.checkIfExists(id);
-    if (!product) {
-      res.status(404).json({ message: 'Product not found' });
-    }
+    await productsServices.checkIfExists(id);
     await productsServices.delete(id);
     res.status(204).end();
   },

@@ -2,6 +2,18 @@ const db = require('./connection');
 const middlewares = require('../middlewares/middlewares');
 
 const salesModels = {
+  checkIfExists: async (id) => {
+    const sql = `SELECT sp.sale_id, s.date, sp.product_id, sp.quantity
+FROM  StoreManager.sales_products AS sp
+INNER JOIN StoreManager.sales AS s
+ON sp.sale_id = s.id
+WHERE id = ?`;
+    const [[sale]] = await db.query(sql, [id]);
+    if (sale) {
+      return sale;
+    }
+  },
+
   getAll: async () => {
     const sql = `SELECT sp.sale_id, s.date, sp.product_id, sp.quantity
 FROM  StoreManager.sales_products AS sp

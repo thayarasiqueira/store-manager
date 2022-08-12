@@ -1,6 +1,14 @@
 const salesModels = require('../models/salesModels');
 
 const salesServices = {
+  checkIfExists: async (id) => {
+    const sale = await salesModels.checkIfExists(id);
+    if (!sale) {
+      const err = { status: 404, message: 'Sale not found' };
+      throw err;
+    }
+  },
+
   getAll: async () => {
     const sales = await salesModels.getAll();
     return sales;
@@ -18,6 +26,7 @@ const salesServices = {
   //     return newProduct;
   //   }
   // },
+
 };
 
 module.exports = salesServices;

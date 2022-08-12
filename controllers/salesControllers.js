@@ -10,10 +10,7 @@ const salesControllers = {
   findById: async (req, res) => {
     const { id } = req.params;
     const sale = await salesServices.findById(id);
-    if (!sale) {
-      console.log('entrou');
-      res.status(404).json({ message: 'Sale not found' });
-    }
+    await salesServices.checkIfExists(id);
     res.status(200).json(sale);
   },
 
