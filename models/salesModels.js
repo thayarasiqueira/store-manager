@@ -44,13 +44,28 @@ WHERE id = ?`;
     }
   },
 
-  // create: async (sales) => {
-  //   const { productId, quantity } = sales;
-  //     const sql = `INSERT INTO StoreManager.sales (productId, quantity) VALUES (?, ?)
-  //     INSERT INTO StoreManager.sales_products (productId, quantity) VALUES (?, ?)`;
-  //     const [newSale] = await db.query(sql, [productId, quantity]);
-  //     return { id: newSale.insertId, productId, quantity };
-  // },
+  create: async (sales) => {
+    const querySalesProducts = `
+    INSERT INTO
+      StoreManager.sales_products (sale_id, product_id, quantity)
+    VALUES
+      (?, ?, ?)`;
+
+    const querySales = `
+    INSERT INTO
+      StoreManager.sales (id, date)
+    VALUES
+      (default, default)`;
+
+    const [resultSale] = await db.query(querySales);
+
+    await sales.forEach(async (sale) => {
+      const { productId, quantity } = sale;
+      await db.query(querySalesProducts, [resultSale.insertId, productId, quantity]);
+    });
+
+    return resultSale;
+  },
 };
 
 module.exports = salesModels;

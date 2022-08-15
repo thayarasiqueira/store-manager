@@ -16,12 +16,7 @@ const productsControllers = {
 
   create: async (req, res) => {
     const { name } = req.body;
-    if (!name) {
-      res.status(400).json({ message: '"name" is required' });
-    }
-    if (name.length < 5) {
-      res.status(422).json({ message: '"name" length must be at least 5 characters long' });
-    }
+    await productsServices.validateName(name);
     const newProduct = await productsServices.create(name);
     res.status(201).json(newProduct);
   },

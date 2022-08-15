@@ -14,11 +14,17 @@ const salesControllers = {
     res.status(200).json(sale);
   },
 
-  // create: async (req, res) => {
-  //   const sales = req.body;
-  //   const newProduct = await salesServices.create(sales);
-  //   res.status(201).json(newProduct);
-  // },
+  create: async (req, res) => {
+    const sales = req.body;
+    salesServices.validateSale(sales);
+    await salesServices.validateProductId(sales);
+    const newProduct = await salesServices.create(sales);
+    const response = {
+      id: newProduct.insertId,
+      itemsSold: [...req.body],
+    };
+    res.status(201).json(response);
+  },
 };
 
 module.exports = salesControllers;
