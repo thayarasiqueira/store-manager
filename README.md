@@ -1,16 +1,24 @@
-# 🚧 README em construção 🚧
+# Store Manager
 
-<!-- Olá, Tryber!
+The RESTful API built here,using MSC (model-service-controller) architecture, is a dropshipping sales management system in which you will be able to create, view, delete and update products and sales. MySQL database was used for data management. 
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+## Installation
 
-É essencial que você preencha esse documento por conta própria, ok?
+Use the package manager [npm] to install all dependencies.
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
+```bash
+npm install
+```
 
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
+## Usage
 
--->
+In the project directory, you can run:
+
+```
+npm start
+```
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in your browser.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
